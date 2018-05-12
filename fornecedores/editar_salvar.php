@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Clientes</title>
+    <title>Fornecedores</title>
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/estilos.css">
 </head>
@@ -36,15 +36,15 @@
 			</div>			
 		</div>   
 
-        <h3>Editar Cliente</h3>
+        <h3>Editar Fornecedor</h3>
         
         <?php
         require_once('../conn/conn.php');        
-        $query = "UPDATE clientes SET nome = :nome, cpf = :cpf, endereco = :endereco, cidade = :cidade, estado = :estado, telefone = :telefone, email = :email, ativo = :ativo WHERE id = :id";
+        $query = "UPDATE fornecedores SET nome = :nome, cnpj = :cnpj, endereco = :endereco, cidade = :cidade, estado = :estado, telefone = :telefone, email = :email, ativo = :ativo WHERE id = :id";
         $stmt = $conn->prepare($query);
         $stmt->bindValue(':id', $_POST['id']);
         $stmt->bindValue(':nome', $_POST['nome']);
-        $stmt->bindValue(':cpf', $_POST['cpf']);
+        $stmt->bindValue(':cnpj', $_POST['cnpj']);
         $stmt->bindValue(':endereco', $_POST['endereco']);
         $stmt->bindValue(':cidade', $_POST['cidade']);
         $stmt->bindValue(':estado', $_POST['estado']);
@@ -58,10 +58,9 @@
             echo "Ocorreu um erro ao atualizars os dados.";
         }
         ?>
-        <a href="../clientes">Voltar</a></p>
+        <a href="../fornecedores">Voltar</a></p>
              
     </div>
 </body>
-</html>
-                
+</html>             
     

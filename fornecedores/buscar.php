@@ -4,8 +4,10 @@
 include('../conn/conn.php');
 
 // SELECT 
-$query = "SELECT * FROM clientes ORDER BY nome ASC";
-$stmt = $conn->query($query);
+$query = "SELECT * FROM fornecedores WHERE nome = :nome";
+$stmt = $conn->prepare($query);
+$stmt->bindValue(':nome', $_POST['nome']);
+$stmt->execute();
 
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice associativo.  Ex:  [id] => 1   [nome] => Rafael
 
@@ -49,13 +51,13 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice a
 			</div>			
 		</div>   
 
-        <h3>Relação de clientes</h3>
+        <h3>Resultado de sua busca</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
+                    <th scope="col">CNPJ</th>
                     <th scope="col">Endereço</th>
                     <th scope="col">Cidade</th>
                     <th scope="col">Estado</th>
@@ -71,7 +73,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice a
                     echo "<tr>";
                     echo "<td>".$cliente['id']."</td>";
                     echo "<td>".$cliente['nome']."</td>";
-                    echo "<td>".$cliente['cpf']."</td>";
+                    echo "<td>".$cliente['cnpj']."</td>";
                     echo "<td>".$cliente['endereco']."</td>";
                     echo "<td>".$cliente['cidade']."</td>";
                     echo "<td>".$cliente['estado']."</td>";
@@ -96,17 +98,9 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice a
                 ?>              
             </tbody>
         </table>
-        <a href="cadastrar.php" class="btn btn-primary">Cadastrar novo cliente</a>          
-        <form action="buscar.php" class=" pull-right" method="POST">
-            <input type="text" class="span2" name="nome" placeholder="Digite o nome do cliente">
-            <button class="btn btn-inverse">Buscar</button>
-        </form>
+             
     </div>
 </body>
 </html>
-
-
-        
-
 
 

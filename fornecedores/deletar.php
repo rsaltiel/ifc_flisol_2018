@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Clientes</title>
+    <title>Fornecedores</title>
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/estilos.css">
 </head>
@@ -36,29 +36,22 @@
 			</div>			
 		</div>   
 
-        <h3>Editar Cliente</h3>
+        <h3>Deletar Fornecedor</h3>
         
         <?php
         require_once('../conn/conn.php');        
-        $query = "UPDATE clientes SET nome = :nome, cpf = :cpf, endereco = :endereco, cidade = :cidade, estado = :estado, telefone = :telefone, email = :email, ativo = :ativo WHERE id = :id";
+        $query = "DELETE FROM fornecedores WHERE id = :id";
         $stmt = $conn->prepare($query);
-        $stmt->bindValue(':id', $_POST['id']);
-        $stmt->bindValue(':nome', $_POST['nome']);
-        $stmt->bindValue(':cpf', $_POST['cpf']);
-        $stmt->bindValue(':endereco', $_POST['endereco']);
-        $stmt->bindValue(':cidade', $_POST['cidade']);
-        $stmt->bindValue(':estado', $_POST['estado']);
-        $stmt->bindValue(':telefone', $_POST['telefone']);
-        $stmt->bindValue(':email', $_POST['email']);
-        $stmt->bindValue(':ativo', $_POST['ativo']);
+        $stmt->bindValue(':id', $_GET['id']);
         
         if ($stmt->execute()){
-            echo "Os dados foram atualizados com sucesso.";
+            echo "O fornecedor foi deletado com sucesso.";
         } else {
-            echo "Ocorreu um erro ao atualizars os dados.";
+            echo "Ocorreu um erro ao deletar o fornecedor.";
         }
-        ?>
-        <a href="../clientes">Voltar</a></p>
+        ?>      
+        
+        <a href="../fornecedores">Voltar</a>
              
     </div>
 </body>

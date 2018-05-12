@@ -1,21 +1,10 @@
-<?php
-require_once('../conn/conn.php');
-$query = "SELECT * FROM clientes WHERE id=:id";
-$stmt = $conn->prepare($query);
-$stmt->bindValue(':id', $_GET['id']);
-$stmt->execute();
-
-$cliente = $stmt->fetch(PDO::FETCH_ASSOC); 
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Clientes</title>
+    <title>Fornecedor</title>
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/estilos.css">
 </head>
@@ -30,13 +19,13 @@ $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 			</div>			
 			
 			<div class="col-md-3 padeador">
-				<a href="cad_produto.html">
+				<a href="../produtos">
 					<div class="btn btn-primary btn-lg center-block">Produtos</div>
 				</a>
 			</div>	
 			
 			<div class="col-md-3 padeador">
-				<a href="cad_fornecedor.html">
+				<a href="../fornecedores">
 					<div class="btn btn-warning btn-lg center-block" href="cad_fornecedor">Fornecedores</div>
 				</a>
 			</div>
@@ -47,33 +36,33 @@ $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 			</div>			
 		</div>   
 
-        <h3>Cadastrar Cliente</h3>
-		<form method="POST" action="editar_salvar.php" class="marginB20px">
+        <h3>Cadastrar Fornecedor</h3>
+		<form method="POST" action="cadastrar_salvar.php" class="marginB20px">
 			<div class="form-group">
 				<label for="nome" class="col-2 col-form-label">Nome</label>
 				<div>
-					<input class="form-control" type="text" placeholder="Nome" value="<?php echo $cliente["nome"]; ?>" name="nome" required>
+					<input class="form-control" type="text" placeholder="Nome" name="nome" required>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="cpf" class="col-2 col-form-label">CPF</label>
+				<label for="cpf" class="col-2 col-form-label">CNPJ</label>
 				<div>
-					<input class="form-control" type="text" placeholder="CPF" value="<?php echo $cliente["cpf"]; ?>" name="cpf" required>
+					<input class="form-control" type="text" placeholder="CNPJ" name="cnpj" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="endereco" class="col-2 col-form-label">Endereço</label>
 				<div>
-					<input class="form-control" type="text" placeholder="Endereço"value="<?php echo $cliente["endereco"]; ?>" name="endereco" required>
+					<input class="form-control" type="text" placeholder="Endereço" name="endereco" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="cidade" class="col-2 col-form-label">Cidade</label>
 				<div>
-					<input class="form-control" type="text" placeholder="Cidade" value="<?php echo $cliente["cidade"]; ?>" name="cidade" required>
+					<input class="form-control" type="text" placeholder="Cidade" name="cidade" required>
 				</div>
 			</div>
 
@@ -116,14 +105,14 @@ $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 			<div class="form-group">
 				<label for="cidade" class="col-2 col-form-label">Telefone</label>
 				<div>
-					<input class="form-control" type="text" placeholder="Telefone" value="<?php echo $cliente["telefone"]; ?>" name="telefone" required>
+					<input class="form-control" type="text" placeholder="Telefone" name="telefone" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="cidade" class="col-2 col-form-label">E-mail</label>
 				<div>
-					<input class="form-control" type="email" placeholder="E-mail" value="<?php echo $cliente["email"]; ?>" name="email" required>
+					<input class="form-control" type="email" placeholder="E-mail" name="email" required>
 				</div>
 			</div>
 
@@ -136,11 +125,9 @@ $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 					<option value="1">Sim</option>					
 				</select>
 				</div>
-            </div>
-            
-            <input type="hidden" name="id" value="<?php echo $cliente["id"]; ?>">
+			</div>
 
-			<button type="submit" class="btn btn-primary">Editar</button>
+			<button type="submit" class="btn btn-primary">Cadastrar</button>
 
 		</form>    
              

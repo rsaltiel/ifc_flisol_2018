@@ -38,7 +38,18 @@
 
         <h3>Deletar Cliente</h3>
         
-        <p>O cliente foi deletado com sucesso</p>      
+        <?php
+        require_once('../conn/conn.php');        
+        $query = "DELETE FROM clientes WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':id', $_GET['id']);
+        
+        if ($stmt->execute()){
+            echo "O cliente foi deletado com sucesso.";
+        } else {
+            echo "Ocorreu um erro ao deletar o cliente.";
+        }
+        ?>      
         
         <a href="../clientes">Voltar</a>
              

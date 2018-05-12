@@ -38,7 +38,25 @@
 
         <h3>Cadastrar Cliente</h3>
         
-        <p>Os dados foram salvos com sucesso</p>
+        <?php
+        require_once('../conn/conn.php');        
+        $query = "INSERT INTO clientes (nome, cpf, endereco, cidade, estado, telefone, email, ativo) VALUES (:nome, :cpf, :endereco, :cidade, :estado, :telefone, :email, :ativo)";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':nome', $_POST['nome']);
+        $stmt->bindValue(':cpf', $_POST['cpf']);
+        $stmt->bindValue(':endereco', $_POST['endereco']);
+        $stmt->bindValue(':cidade', $_POST['cidade']);
+        $stmt->bindValue(':estado', $_POST['estado']);
+        $stmt->bindValue(':telefone', $_POST['telefone']);
+        $stmt->bindValue(':email', $_POST['email']);
+        $stmt->bindValue(':ativo', $_POST['ativo']);
+        
+        if ($stmt->execute()){
+            echo "Os dados foram gravados com sucesso.";
+        } else {
+            echo "Ocorreu um erro ao gravar os dados.";
+        }
+        ?>  
         
         <a href="../clientes">Voltar</a></p>
              

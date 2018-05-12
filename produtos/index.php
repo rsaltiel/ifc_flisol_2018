@@ -4,10 +4,12 @@
 include('../conn/conn.php');
 
 // SELECT 
-$query = "SELECT * FROM clientes ORDER BY nome ASC";
+$query = "SELECT p.id, p.nome, p.preco, p.descricao, p.estoque, f.nome as nome_fornecedor FROM produtos p
+          INNER JOIN fornecedores f
+          ON p.fornecedores_id = f.id
+          ORDER BY p.nome ASC";
 $stmt = $conn->query($query);
-
-$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice associativo.  Ex:  [id] => 1   [nome] => Rafael
+$fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice associativo.  Ex:  [id] => 1   [nome] => Rafael
 
 ?>
 
@@ -17,7 +19,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice a
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Clientes</title>
+    <title>Produtos</title>
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/estilos.css">
 </head>
@@ -55,50 +57,32 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice a
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Endereço</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Ativo</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Estoque</th>
+                    <th scope="col">Fornecedor</th>                    
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>                
                 <?php                    
-                foreach ($clientes as $cliente){
+                foreach ($fornecedores as $fornecedor){
                     echo "<tr>";
-                    echo "<td>".$cliente['id']."</td>";
-                    echo "<td>".$cliente['nome']."</td>";
-                    echo "<td>".$cliente['cpf']."</td>";
-                    echo "<td>".$cliente['endereco']."</td>";
-                    echo "<td>".$cliente['cidade']."</td>";
-                    echo "<td>".$cliente['estado']."</td>";
-                    echo "<td>".$cliente['telefone']."</td>";
-                    echo "<td>".$cliente['email']."</td>";
-                    echo "<td>";
-
-                    switch ($cliente['ativo']) {
-                        case 0:
-                            echo "Inativo";
-                            break;
-                        
-                        default:
-                            echo "Ativo";
-                            break;
-                    }
-                    
-                    echo "</td>";
-                    echo "<td><a href=\"editar.php?id=".$cliente['id']."\"><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span></a> <a href=\"deletar.php?id=".$cliente['id']."\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a></td>";
+                    echo "<td>".$fornecedor['id']."</td>";
+                    echo "<td>".$fornecedor['nome']."</td>";
+                    echo "<td>".$fornecedor['preco']."</td>";
+                    echo "<td>".$fornecedor['descricao']."</td>";
+                    echo "<td>".$fornecedor['estoque']."</td>";
+                    echo "<td>".$fornecedor['nome_fornecedor']."</td>";                 
+                    echo "<td><a href=\"editar.php?id=".$fornecedor['id']."\"><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span></a> <a href=\"deletar.php?id=".$fornecedor['id']."\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a></td>";
                     echo "</tr>";
                 }
                 ?>              
             </tbody>
         </table>
-        <a href="cadastrar.php" class="btn btn-primary">Cadastrar novo cliente</a>          
+        <a href="cadastrar.php" class="btn btn-primary">Cadastrar novo produto</a>          
         <form action="buscar.php" class=" pull-right" method="POST">
-            <input type="text" class="span2" name="nome" placeholder="Digite o nome do cliente">
+            <input type="text" class="span2" name="nome" placeholder="Digite o nome do produto">
             <button class="btn btn-inverse">Buscar</button>
         </form>
     </div>

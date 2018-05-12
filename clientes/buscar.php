@@ -1,3 +1,17 @@
+<?php
+
+// Faz a conexão com o banco de dados
+include('../conn/conn.php');
+
+// SELECT 
+$query = "SELECT * FROM clientes WHERE nome = :nome";
+$stmt = $conn->prepare($query);
+$stmt->bindValue(':nome', $_POST['nome']);
+$stmt->execute();
+
+$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna uma array com índice associativo.  Ex:  [id] => 1   [nome] => Rafael
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -54,20 +68,34 @@
                 </tr>
             </thead>
             <tbody>                
-                
-                <tr>
-                    <td>1</td>
-                    <td>Nome</td>
-                    <td>000.000.000-69</td>
-                    <td>Endereço</td>
-                    <td>Cidade</td>
-                    <td>UF</td>
-                    <td>47 - 3333-3333</td>
-                    <td>email@email.com</td>
-                    <td>Ativo</td>
-                    <td><a href="editar.php?id=1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="deletar.php?id=1"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-                </tr>
+                <?php                    
+                foreach ($clientes as $cliente){
+                    echo "<tr>";
+                    echo "<td>".$cliente['id']."</td>";
+                    echo "<td>".$cliente['nome']."</td>";
+                    echo "<td>".$cliente['cpf']."</td>";
+                    echo "<td>".$cliente['endereco']."</td>";
+                    echo "<td>".$cliente['cidade']."</td>";
+                    echo "<td>".$cliente['estado']."</td>";
+                    echo "<td>".$cliente['telefone']."</td>";
+                    echo "<td>".$cliente['email']."</td>";
+                    echo "<td>";
 
+                    switch ($cliente['ativo']) {
+                        case 0:
+                            echo "Inativo";
+                            break;
+                        
+                        default:
+                            echo "Ativo";
+                            break;
+                    }
+                    
+                    echo "</td>";
+                    echo "<td><a href=\"editar.php?id=".$cliente['id']."\"><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span></a> <a href=\"deletar.php?id=".$cliente['id']."\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></a></td>";
+                    echo "</tr>";
+                }
+                ?>              
             </tbody>
         </table>
              
